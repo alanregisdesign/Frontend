@@ -11,7 +11,7 @@ const data = [
 
 const LineChartComponent = () => {
   return (
-    <LineChart width={500} height={300} data={data}>
+    <LineChart width={500} height={300} data={data} margin={{top: 40}}>
       <XAxis dataKey="name" />
       <YAxis />
       <CartesianGrid stroke="#eee" strokeDasharray="5 5" />

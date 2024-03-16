@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import Header from '/src/components/Header';
 import axios from 'axios';
+import { Navigate } from 'react-router-dom';
 
 const FormularioCadastro = styled.form`
     display: flex;
@@ -53,7 +54,6 @@ const GeneroWrapper = styled.div`
     height: 30px;
     margin-bottom: 10px;
     display: flex;
-    wrap: nowrap;
     align-items: center;
     justify-content: space-between;
 `;
@@ -71,9 +71,10 @@ const Cadastro = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = (data) => {
-    axios.post('http://localhost:3001/usuarios', data)
+    axios.post('http://localhost:3001/visitante', data)
       .then(response => {
         alert('Usuário cadastrado com sucesso!');
+        return <Navigate to="/" />
       })
       .catch(error => {
         alert('Erro ao cadastrar usuário:', error);
@@ -92,11 +93,15 @@ const Cadastro = () => {
             <Input type="text" placeholder="Nome" {...register("nome", { required: true })} />
             {errors.nome && <span>Campo obrigatório</span>}
 
-            <Input type="text" placeholder="Idade" {...register("idade")} />
+            <Input type="text" placeholder="Profissão" {...register("profissao")} />
+
+            <Input type="number" placeholder="Idade" {...register("idade")} />
 
             <Input type="text" placeholder="Cidade" {...register("cidade")} />
 
             <Input type="text" placeholder="Bairro" {...register("bairro")} />
+
+            <Input type="text" placeholder="Senha" {...register("senha")} />
 
             <GeneroWrapper>
                 <GeneroTitle>Gênero:</GeneroTitle>
@@ -105,10 +110,8 @@ const Cadastro = () => {
                 <option value="masculino">Masculino</option>
                 <option value="feminino">Feminino</option>
                 <option value="outros">Outros</option>
-                <option value="prefiro-nao-responder">Prefiro não responder</option>
                 </GeneroSelect>
             </GeneroWrapper>
-
             <Button type="submit">Cadastrar</Button>
         </FormularioCadastro>
     </div>

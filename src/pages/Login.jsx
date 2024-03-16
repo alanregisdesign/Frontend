@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 import Header from '/src/components/Header';
@@ -64,11 +65,15 @@ const Title = styled.h3`
   justify-content: center;
 `;
 
+const LinkContainer = styled.div`
+    width: 100%;
+`;
+
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = (data) => {
-    axios.post('http://localhost:3000/visitantes/login', data)
+    axios.post('http://localhost:3001/login', data)
 
         .then(response => {
             localStorage.setItem('token', response.data.token);
@@ -91,7 +96,11 @@ const Login = () => {
             {errors.senha && <span>Campo obrigatório</span>}
 
             <Button type="submit">Entrar</Button>
-            <ButtonCadastro type="button">Cadastrar</ButtonCadastro>
+            <LinkContainer>
+              <Link to="/cadastro">
+                <ButtonCadastro type="button">Cadastrar</ButtonCadastro>
+              </Link>
+            </LinkContainer>
         </LoginForm>
     </div>
   );
